@@ -1,11 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const navigation = useNavigation();
+  
+  const handleLogin = () => {
     if (username === 'admin' || username === 'guest') {
       if (password === 'admin1234' || password === 'guest1234') {
         navigation.navigate('GamePlay');
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5', // Background color for the entire screen
+    backgroundColor: '#f5f5f5',
   },
   header: {
     fontSize: 24,
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 20,
-    paddingLeft: 10, // Add padding for better input field appearance
+    paddingLeft: 10, 
   },
 });
 

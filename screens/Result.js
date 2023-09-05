@@ -7,6 +7,9 @@ const Result = (isPlayerTurn) => {
   const resetGame = () => {
     navigation.navigate('GamePlay', {});
   };
+  const navigateToScores = () => {
+    navigation.navigate('Scores', {});
+  };
   return (
     <View style={styles.container}>
       {isPlayerTurn ? (
@@ -15,7 +18,7 @@ const Result = (isPlayerTurn) => {
         <Text style={styles.resultText}>You Win! AI Loses!</Text>
       )}
       <Button title="Play Again" onPress={resetGame} />
-      <Button title="Scores" onPress={resetGame} />
+      <Button title="Scores" onPress={navigateToScores} />
     </View>
   );
 };
