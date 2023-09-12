@@ -13,6 +13,12 @@ const LoginScreen = () => {
       if (password === 'admin1234' || password === 'guest1234') {
         navigation.navigate('GamePlay');
       }
+      else if(password===''){
+          alert('Enter Password!')
+      }
+      else{
+        alert('Wrong Password')
+      }
     } else {
       alert('Enter valid credentials');
     }

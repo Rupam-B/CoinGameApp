@@ -1,7 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,Button } from 'react-native';
+
 
 const Scores = () => {
+
+  const navigation = useNavigation();
 
   const resetGame = () => {
     navigation.navigate('GamePlay', {});
