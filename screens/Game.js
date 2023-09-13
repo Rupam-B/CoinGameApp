@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 // --------
 import { connect } from 'react-redux';
 import { winGame, looseGame } from '../store/action';
@@ -34,9 +35,23 @@ const Game = ({ wins, looses, winGame, looseGame }) => {
 
   const handlePlayerMove = (count) => {
     if (count < 1 || count > 4 || count > coins) {
-      alert('Invalid move. Pick 1 to 4 coins.');
+
+      Toast.show({
+        type:'error',
+        text1 :'Invalid move. Pick Valid coins.',
+        topOffset:500,
+        visibilityTime: 1000,
+      })
+      // alert('Invalid move. Pick 1 to 4 coins.');
       return;
     }
+
+    Toast.show({
+      type:'success',
+      text1 :`You Picked ${count} coins`,
+      topOffset:500,
+      visibilityTime: 1000,
+    })
 
     setCoins(coins - count);
     setIsPlayerTurn(false);
@@ -46,14 +61,10 @@ const Game = ({ wins, looses, winGame, looseGame }) => {
     navigation.navigate('Result', { isPlayerTurn:!isPlayerTurn });
     setCoins(20);
     setIsPlayerTurn(true); 
-
-
-
-
-    // ---------
-    if (!isPlayerTurn) {
+    // --------- Logic to Dispatch reducer action(win/Loss)
+    if (isPlayerTurn) {
       winGame();
-    } else if (isPlayerTurn) {
+    } else if (!isPlayerTurn) {
       looseGame();
     }
 
@@ -66,6 +77,9 @@ const Game = ({ wins, looses, winGame, looseGame }) => {
       <View style={styles.scoreElements}>
         <Text style={styles.scoreTextOne} >Wins</Text>
         <Text style={styles.scoreTextOne} >{wins}</Text>
+      </View>
+      <View style={styles.scoreElements}>
+        <Text style={styles.scoreTextThree} >  Last {'\n'}  Pick {'\n'} Loose!</Text>
       </View>
       <View style={styles.scoreElements}>
         <Text style={styles.scoreTextTwo}>Losses</Text>
@@ -170,11 +184,11 @@ const styles = StyleSheet.create({
     marginHorizontal:20,
     height:30,
     width:30,
-    backgroundColor:'#FF0000',
+    backgroundColor:'#FFC300',
     borderRadius:50,
     paddingLeft:8,
-    paddingBottom:4,
-    paddingTop:0
+    paddingBottom:2,
+    top:0
   },
   coinsTextPrimary: {
     fontSize: 15,
@@ -220,6 +234,10 @@ const styles = StyleSheet.create({
   scoreTextTwo:{
     fontSize: 24,
     color:'#FF0000'
+  },
+  scoreTextThree:{
+    fontSize: 15,
+    color:'#FFFF00'
   },
   scoreElements:{
     alignItems:'center',
