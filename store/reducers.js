@@ -1,20 +1,19 @@
-import { WIN_GAME,LOOSE_GAME } from "./action";
-
 
 const initialState = {
     wins :0,
     looses :0,
 }
 
-export function gameReducer (state= initialState, action){
+export const gameReducer= (state= initialState, action)=>{
 
-    if(action.type === WIN_GAME){
+
+    if(action.type === 'WIN_GAME'){
         return {
             ...state,
             wins : state.wins + 1,
         }
     }
-    else if(action.type === LOOSE_GAME){
+    else if(action.type === 'LOOSE_GAME'){
         return {
             ...state,
             looses : state.looses + 1,

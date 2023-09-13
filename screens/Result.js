@@ -11,9 +11,9 @@ const Result = () => {
   const resetGame = () => {
     navigation.navigate('GamePlay', {});
   };
-  // const navigateToScores = () => {
-  //   navigation.navigate('Scores', {});
-  // };
+  const navigateToScores = () => {
+    navigation.navigate('Scores', {});
+  };
   return (
     // <View style={styles.container}>
     <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:receivedData ? '#FF0000' : '#00FF00' }}>
@@ -23,7 +23,10 @@ const Result = () => {
         <Text style={styles.resultText}>You Win! AI Loses!</Text>
       )}
       <Button title="Play Again" onPress={resetGame} />
-      {/* <Button title="Scores" onPress={navigateToScores} /> */}
+
+      <View style={styles.ButtonContainer}>
+      <Button title="Scores" onPress={navigateToScores} />
+      </View>
     </View>
   );
 };
@@ -40,6 +43,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  ButtonContainer:{
+    marginTop:20
+  }
 });
 
 export default Result;

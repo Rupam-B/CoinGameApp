@@ -3,11 +3,17 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 // --------
-import { connect } from 'react-redux';
-import { winGame, looseGame } from '../store/action';
+import { useDispatch, useSelector } from 'react-redux';
+import{winGame,looseGame} from '../store/action'
 // --------
 
-const Game = ({ wins, looses, winGame, looseGame }) => {
+const Game = () => {
+
+    // ------ hooks toconnect with Redux
+  const gameResults = useSelector((state)=>state.game)
+  const dispatch = useDispatch();
+  // ------
+
   const [coins, setCoins] = useState(20);
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
 
@@ -42,7 +48,7 @@ const Game = ({ wins, looses, winGame, looseGame }) => {
         topOffset:500,
         visibilityTime: 1000,
       })
-      // alert('Invalid move. Pick 1 to 4 coins.');
+      
       return;
     }
 
@@ -63,9 +69,9 @@ const Game = ({ wins, looses, winGame, looseGame }) => {
     setIsPlayerTurn(true); 
     // --------- Logic to Dispatch reducer action(win/Loss)
     if (isPlayerTurn) {
-      winGame();
+      dispatch(winGame());
     } else if (!isPlayerTurn) {
-      looseGame();
+      dispatch(looseGame());
     }
 
     // --------------
@@ -76,14 +82,14 @@ const Game = ({ wins, looses, winGame, looseGame }) => {
     <View style={styles.score}>
       <View style={styles.scoreElements}>
         <Text style={styles.scoreTextOne} >Wins</Text>
-        <Text style={styles.scoreTextOne} >{wins}</Text>
+        <Text style={styles.scoreTextOne} >{gameResults.wins}</Text>
       </View>
       <View style={styles.scoreElements}>
         <Text style={styles.scoreTextThree} >  Last {'\n'}  Pick {'\n'} Loose!</Text>
       </View>
       <View style={styles.scoreElements}>
         <Text style={styles.scoreTextTwo}>Losses</Text>
-        <Text style={styles.scoreTextTwo}>{looses}</Text>
+        <Text style={styles.scoreTextTwo}>{gameResults.looses}</Text>
         </View>
       </View>
     <View style={styles.container}>
@@ -246,18 +252,5 @@ const styles = StyleSheet.create({
   
 });
 
-// ------------
-const mapStateToProps = (state) => ({
-  wins: state.game.wins,
-  looses: state.game.looses,
-});
-
-const mapDispatchToProps = {
-  winGame,
-  looseGame,
-};
-// -------------
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default (Game);
 
